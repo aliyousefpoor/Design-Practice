@@ -35,6 +35,9 @@
         app:layout_constraintEnd_toEndOf="@id/mobileTextIL"
         app:layout_constraintTop_toBottomOf="@id/mobileTextIL"
         android:text="submit"
-        android:layout_marginTop="40dp" />
+        android:textColor="#111"
+        android:layout_marginTop="40dp"
+        style="?attr/materialButtonOutlinedStyle"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
