@@ -12,6 +12,6 @@ class NotificationFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.notification_fragment, container, false)
+        return inflater.inflate(R.layout.splash, container, false)
     }
 }
