@@ -1,36 +1,33 @@
 package com.example.uitest
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.mukesh.OtpView
 
-class ProfileFragment : Fragment() {
-    private lateinit var btn: Button
-    private lateinit var password: EditText
+class InboxFragment : Fragment() {
+    private lateinit var otpView: OtpView
+    private lateinit var validateButton: Button
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.profile_fragment, container, false)
-
+        return inflater.inflate(R.layout.inbox_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        btn = view.findViewById(R.id.submit)
-        password = view.findViewById(R.id.password)
+        otpView = view.findViewById(R.id.otp_view)
+        validateButton = view.findViewById(R.id.validate)
 
-        btn.setOnClickListener() {
-            Toast.makeText(requireContext(), "PassWord : ${password.text}", Toast.LENGTH_SHORT).show()
-
+        validateButton.setOnClickListener {
+            Toast.makeText(context," otpView.text", Toast.LENGTH_SHORT).show()
         }
     }
 }

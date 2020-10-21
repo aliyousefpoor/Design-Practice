@@ -8,13 +8,16 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
     private lateinit var navController: NavController
     private lateinit var profileGraph: View
-    private lateinit var notificationGraph: View
+
+    //    private lateinit var notificationGraph: View
+    private lateinit var inboxGraph: View
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,9 +27,12 @@ class MainActivity : AppCompatActivity() {
         navigationView = findViewById(R.id.navigationView)
         navController = Navigation.findNavController(this, R.id.navHostProfileFragment)
         profileGraph = findViewById(R.id.navHostProfileFragment)
-        notificationGraph = findViewById(R.id.navHostNotificationFragment)
+        inboxGraph = findViewById(R.id.navHostInboxFragment)
 
-        notificationGraph.visibility = View.GONE
+//        notificationGraph = findViewById(R.id.navHostNotificationFragment)
+
+//        notificationGraph.visibility = View.GONE
+        inboxGraph.visibility = View.GONE
 
         navigationView.setNavigationItemSelectedListener {
 
@@ -34,21 +40,25 @@ class MainActivity : AppCompatActivity() {
                 R.id.profile -> {
                     navController = Navigation.findNavController(this, R.id.navHostProfileFragment)
                     profileGraph.visibility = View.VISIBLE
-                    notificationGraph.visibility = View.GONE
+//                    notificationGraph.visibility = View.GONE
                     drawerLayout.close()
                     true
                 }
 
                 R.id.notification -> {
-                    navController =
-                        Navigation.findNavController(this, R.id.navHostNotificationFragment)
+                    val notificationFragment = NotificationFragment()
+                    notificationFragment.show(supportFragmentManager, "ProfileFragment")
+//                    navController =
+//                        Navigation.findNavController(this, R.id.navHostNotificationFragment)
                     profileGraph.visibility = View.GONE
-                    notificationGraph.visibility = View.VISIBLE
+//                    notificationGraph.visibility = View.VISIBLE
                     drawerLayout.close()
                     true
                 }
                 R.id.inbox -> {
-                    Toast.makeText(applicationContext, "inbox", Toast.LENGTH_SHORT).show()
+                    navController = Navigation.findNavController(this, R.id.navHostInboxFragment)
+                    profileGraph.visibility = View.GONE
+                    inboxGraph.visibility = View.VISIBLE
                     drawerLayout.close()
 
                     true
