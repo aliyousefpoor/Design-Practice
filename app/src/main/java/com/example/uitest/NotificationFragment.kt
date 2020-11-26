@@ -4,21 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
-import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.bottom_sheet_layout.*
-import kotlinx.android.synthetic.main.bottom_sheet_layout.view.*
-import kotlinx.android.synthetic.main.notification_fragment.*
-import kotlinx.android.synthetic.main.sheet.*
 
-class NotificationFragment : BottomSheetDialogFragment() {
 
+class NotificationFragment : Fragment() {
+    private lateinit var arrow: ImageView
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -29,11 +25,17 @@ class NotificationFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
+        arrow = view.findViewById(R.id.arrow)
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
 
-
-        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED)
-
+        arrow.setOnClickListener {
+            if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            } else if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            }
+        }
+        arrowBehavior()
 
         shareTxt.setOnClickListener {
             Toast.makeText(context, "Share ...", Toast.LENGTH_SHORT).show()
@@ -44,6 +46,22 @@ class NotificationFragment : BottomSheetDialogFragment() {
         saveTxt.setOnClickListener {
             Toast.makeText(context, "Save File ...", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun arrowBehavior() {
+        bottomSheetBehavior.setBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                    arrow.setImageResource(R.drawable.arrow_up)
+                } else if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                    arrow.setImageResource(R.drawable.arrow_down)
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            }
+        })
     }
 }
 
